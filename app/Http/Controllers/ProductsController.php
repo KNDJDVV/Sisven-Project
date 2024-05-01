@@ -26,7 +26,10 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        $categories = DB::table('categories')
+        ->orderBy('nombre')
+        ->get();
+        return view('Products.new', ['categories' => $categories]);
     }
 
     /**
@@ -34,7 +37,22 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = new Products();
+        $product->name = $request->name;
+        $product->category_id = $request->code;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        
+        
+        $product->save();
+    
+
+        $product = DB::table('products')
+        -> join('categories','products.id','=','categories.id')
+        -> select('products.*',"categories.nombre")
+        -> get();
+        
+        return view('Products.index',['product' => $product]);
     }
 
     /**

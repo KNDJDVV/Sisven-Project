@@ -27,7 +27,7 @@
   <body>
     <div class="container">
         <h1>Lista de Productos</h1>
-    
+        <a href="{{ route('Products.create')}}" class= "btn btn-sucess">Add</a>
         <table class="table">
             <thead>
                 <tr>
